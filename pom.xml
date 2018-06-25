@@ -17,13 +17,13 @@
     <modules>
         <module>registry</module>
         <module>config</module>
-        <module>hazelcast-cache-client</module>
-        <module>hazelcast-cache</module>
-        <module>domain</module>
         <module>user-service</module>
         <module>statistic-service</module>
         <module>product-service</module>
         <module>api-gateway</module>
+        <module>domain</module>
+        <module>hazelcast-cache</module>
+        <module>hazelcast-cache-client</module>
     </modules>
 
 

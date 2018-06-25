@@ -10,5 +10,8 @@ public class UserService {
     @Autowired
     private HazelcastClientTemplate hazelcastClientTemplate;
 
+    public void createUser() {
+
+    }
 
 }

@@ -37,7 +37,6 @@ public class ProductServiceApplication {
     @Autowired
     private DiscoveryClient discoveryClient;
 
-
     @Bean
     public RestTemplate getRestTemplate() {
         return new RestTemplate();
@@ -46,7 +45,6 @@ public class ProductServiceApplication {
     public static void main(String[] args) {
         SpringApplication.run(ProductServiceApplication.class, args);
     }
-
 
     @RequestMapping(value = "/test")
     public String getTest() {
