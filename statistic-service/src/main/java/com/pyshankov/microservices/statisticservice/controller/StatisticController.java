@@ -9,9 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-/**
- * Created by valeriyartemenko on 06.05.18.
- */
+
 @RestController
 public class StatisticController {
     @Autowired
