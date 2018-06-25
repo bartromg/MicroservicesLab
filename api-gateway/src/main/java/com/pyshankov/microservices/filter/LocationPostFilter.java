@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
  * Created by pyshankov on 01.11.16.
  */
 @Component
-public class SimplePreFilter extends ZuulFilter {
+public class LocationPostFilter extends ZuulFilter {
 
 
     @Override
@@ -21,7 +21,7 @@ public class SimplePreFilter extends ZuulFilter {
 
     @Override
     public int filterOrder() {
-        return 1001;
+        return 1002;
     }
 
     @Override
@@ -37,8 +37,8 @@ public class SimplePreFilter extends ZuulFilter {
 
         response.setHeader("Location", request.getRequestURL().toString());
 
-        System.out.println(response.getHeaders("Location"));
 
         return null;
     }
+
 }

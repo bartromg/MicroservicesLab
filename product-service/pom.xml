@@ -25,11 +25,22 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>com.pyshankov.microservices</groupId>
+            <artifactId>domain</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
 
         <dependency>
             <groupId>com.googlecode.json-simple</groupId>
             <artifactId>json-simple</artifactId>
             <version>1.1.1</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.pyshankov.microservices</groupId>
+            <artifactId>hazelcast-cash-client</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
 
         <dependency>

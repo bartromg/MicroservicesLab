@@ -5,6 +5,11 @@ spring:
     config:
       uri: http://localhost:8888
       fail-fast: true
+  data:
+    mongodb:
+        port: 27017
+        host: 127.0.0.1
+        database: microservicedatabase
 server:
   port: 9001
 
