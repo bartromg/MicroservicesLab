@@ -1,8 +1,11 @@
 package com.pyshankov.microservices.statisticservice.service;
 
 import com.pyshankov.microservices.domain.Event;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import com.pyshankov.microservices.statisticservice.repository.StatisticRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * Created by pyshankov on 4/30/18.
@@ -10,11 +13,29 @@ import org.springframework.stereotype.Service;
 @Service
 public class StatisticService {
 
-    @RabbitListener(queues = "${amqp.rabbitmq.queue}")
-    public void handleEvent(Event event) {
-        AmqpConsumer.recievedMessage(event, (message) -> {
-            // TODO: store there event variable to cassandra db, @valera
-        });
+//    public void handleEvent(Event event) {
+//        AmqpConsumer.recievedMessage(event, (message) -> {
+//
+//            // TODO: store there event variable to cassandra db, @valera
+//        });
+//    }
+
+    @Autowired
+    StatisticRepository statisticRepository;
+
+    public StatisticService() {
     }
 
+    public void handleEvent(Event event) {
+//        Event event = new Event(UUID.randomUUID(), "77777", LocalDateTime.now());
+        statisticRepository.save(event);
+    }
+
+    public List<Event> getEventsByName(String firstname) {
+        return statisticRepository.findByFirstname(firstname);
+    }
+
+    public void clearData() {
+        statisticRepository.deleteAll();
+    }
 }

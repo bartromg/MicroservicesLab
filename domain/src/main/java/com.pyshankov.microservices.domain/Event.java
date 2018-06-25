@@ -1,21 +1,37 @@
 package com.pyshankov.microservices.domain;
 
+import org.springframework.data.cassandra.mapping.PrimaryKey;
+import org.springframework.data.cassandra.mapping.Table;
+
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 /**
- * Created by pyshankov on 4/29/18.
+ * Created by valeriyartemenko on 06.05.18.
  */
-public abstract class Event {
-    protected String eventId;
-    protected String userId;
-    protected LocalDateTime timestamp;
+@Table("event")
+public class Event {
 
-    public String getEventId() {
-        return eventId;
+    @PrimaryKey
+    private UUID id;
+    private String userId;
+    private LocalDateTime timestamp;
+
+    public Event(){
     }
 
-    public void setEventId(String eventId) {
-        this.eventId = eventId;
+    public Event(UUID id, String userId, LocalDateTime age) {
+        this.id = id;
+        this.userId = userId;
+        this.timestamp = age;
+    }
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
     }
 
     public String getUserId() {
@@ -26,11 +42,12 @@ public abstract class Event {
         this.userId = userId;
     }
 
-    public LocalDateTime getTimestamp() {
+    public LocalDateTime getAge() {
         return timestamp;
     }
 
-    public void setTimestamp(LocalDateTime timestamp) {
+    public void setAge(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
 }
+
