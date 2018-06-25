@@ -19,17 +19,17 @@ import org.springframework.messaging.handler.annotation.support.MessageHandlerMe
 
 @Configuration
 public class RabbitConfig implements RabbitListenerConfigurer {
-    public static final String QUEUE_ORDERS = "orders-queue";
-    public static final String QUEUE_DEAD_ORDERS = "dead-orders-queue";
-    public static final String EXCHANGE_ORDERS = "orders-exchange";
+    public static final String QUEUE_ORDERS = "orders-queue21111";
+    public static final String QUEUE_DEAD_ORDERS = "dead-orders-queue2";
+    public static final String EXCHANGE_ORDERS = "orders-exchange2";
 
     @Bean
     Queue ordersQueue() {
 
-        return QueueBuilder.durable(QUEUE_ORDERS)
-                .withArgument("x-dead-letter-exchange", "")
-                .withArgument("x-dead-letter-routing-key", QUEUE_DEAD_ORDERS)
-                .withArgument("x-message-ttl", 5000)
+        return QueueBuilder.nonDurable(QUEUE_ORDERS)
+//                .withArgument("x-dead-letter-exchange", "")
+//                .withArgument("x-dead-letter-routing-key", QUEUE_DEAD_ORDERS)
+//                .withArgument("x-message-ttl", 15000)
                 .build();
     }
 

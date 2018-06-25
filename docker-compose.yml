@@ -16,8 +16,8 @@ services:
         hostname: registry
         expose:
             - "8761"
-#        ports:
-#            - "8761:8761"
+        ports:
+            - "8761:8761"
 
 
     rabbitmq:
@@ -27,10 +27,10 @@ services:
             - "15672"
             - "5672"
         environment:
-          - RABBITMQ_PASSWORD=superSecure
-          - RABBITMQ_USERNAME=fasdkng30efdbho20
-#        volumes:
-#          - 'rabbitmqstats_data:/bitnami'
+          - RABBITMQ_PASSWORD=password
+          - RABBITMQ_USERNAME=username
+        volumes:
+          - ./rabbitmqstats_data:/rabbitmqstats_data
         ports:
           - "5672:5672"
           - "15672:15672"
@@ -79,17 +79,6 @@ services:
 #        ports:
 #            - "10001:10001"
 
-    user-mongodb:
-        environment:
-            MONGODB_DATABASE: "microservicedatabase"
-        image: mongo:latest
-        restart: on-failure
-        volumes:
-            - ./data/db:/data/db
-        logging:
-            options:
-                max-size: "10m"
-                max-file: "10"
 
 #-----------------------mongo db replica set: start--------------------------
     mongo-primary:
@@ -139,7 +128,7 @@ services:
             - registry
             - hazelcast-cache
             - api-gateway
-            - user-mongodb
+            - mongo-primary
         links:
             - registry
         expose:
@@ -147,32 +136,35 @@ services:
 #        ports:
 #            - "9001:9001"
     
-#    statistic-service:
-#        build: statistic-service
-#        restart: on-failure
-#        healthcheck:
-#            test: ["CMD", "curl", "-f", "http://localhost:8888"]
-#        depends_on:
-#            - config
-#            - registry
-#            - hazelcast-cache
-#            - api-gateway
-#            - user-mongodb
+    statistic-service:
+        build: statistic-service
+        restart: on-failure
+        healthcheck:
+            test: ["CMD", "curl", "-f", "http://localhost:8888"]
+        depends_on:
+            - config
+            - registry
+            - hazelcast-cache
+            - api-gateway
+            - rabbitmq
+            - statistic-cassandra
+        ports:
+            - "9001:9001"
 
-#    statistic-cassandra:
-#        image: cassandra:latest
-#        restart: on-failure
-#        volumes:
-#            - ./cassandradb/dbvol:/var/lib/cassandradb
-#        expose:
-#            - "9160"
-#            - "9042"
-#            - "7199"
-#        logging:
-#            options:
-#                max-size: "10m"
-#                max-file: "10"
-#        ports:
-#            - "9160:9160"
-#            - "9142:9042"
-#            - "7199:7199"
+    statistic-cassandra:
+        image: cassandra:latest
+        restart: on-failure
+        volumes:
+            - ./cassandradb/dbvol:/var/lib/cassandradb
+        expose:
+            - "9160"
+            - "9042"
+            - "7199"
+        logging:
+            options:
+                max-size: "10m"
+                max-file: "10"
+        ports:
+            - "9160:9160"
+            - "9142:9042"
+            - "7199:7199"
