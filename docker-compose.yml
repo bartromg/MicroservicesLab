@@ -69,12 +69,8 @@ services:
             - registry
             - hazelcast-cache
             - api-gateway
-#        healthcheck:
-#            test: ["CMD", "curl", "-f", "http://localhost:8888"]
         expose:
             - "10001"
-#        ports:
-#            - "10001:10001"
 
 
 #-----------------------mongo db replica set: start--------------------------
