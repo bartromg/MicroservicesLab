@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class StatisticServiceApplication {
 
     public static void main(String[] args) {
+
         SpringApplication.run(StatisticServiceApplication.class, args);
     }
-
 
     @Autowired
     private DiscoveryClient discoveryClient;

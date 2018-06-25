@@ -1,7 +1,6 @@
 package com.pyshankov.microservices.statisticservice.service;
 
 import com.pyshankov.microservices.domain.Event;
-import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.stereotype.Service;
 
 /**
@@ -10,11 +9,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class StatisticService {
 
-    @RabbitListener(queues = "${amqp.rabbitmq.queue}")
+//    @RabbitListener(queues = "${amqp.rabbitmq.queue}")
     public void handleEvent(Event event) {
         AmqpConsumer.recievedMessage(event, (message) -> {
+
             // TODO: store there event variable to cassandra db, @valera
         });
     }
+
+
 
 }
