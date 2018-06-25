@@ -7,7 +7,7 @@ spring:
       fail-fast: true
   data:
     mongodb:
-        uri: mongodb://mongo-primary:27017,mongo-secondary1:27017,mongo-secondary2:27017/microservicedatabase?replicaSet=microservice-replica
+        uri: mongodb://mongo-primary:27017,mongo-secondary1:27017,mongo-secondary2:27017/microservicedatabase?replicaSet=microservice-replica&readPreference=secondary
 #        port: 27017
 #        host: user-mongodb
 #        database: microservicedatabase

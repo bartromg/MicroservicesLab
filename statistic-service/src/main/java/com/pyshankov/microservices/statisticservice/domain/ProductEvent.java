@@ -4,7 +4,6 @@ package com.pyshankov.microservices.statisticservice.domain;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Table("ProductEvent")
@@ -17,7 +16,7 @@ public class ProductEvent {
     private UUID id;
     private String productId;
     private ProductEventType productEventType;
-    private LocalDateTime timestamp;
+    //    private LocalDateTime timestamp;
     private String userId;
 
     public ProductEvent() {
@@ -28,7 +27,28 @@ public class ProductEvent {
         this.productId = productId;
         this.productEventType = productEventType;
         this.userId = userId;
-        timestamp = LocalDateTime.now();
+//        timestamp = LocalDateTime.now();
+    }
+
+
+    public UUID getId() {
+        return id;
+    }
+
+    public void setId(UUID id) {
+        this.id = id;
+    }
+
+    public void setProductId(String productId) {
+        this.productId = productId;
+    }
+
+    public void setProductEventType(ProductEventType productEventType) {
+        this.productEventType = productEventType;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getProductId() {
@@ -39,9 +59,9 @@ public class ProductEvent {
         return productEventType;
     }
 
-    public LocalDateTime getTimestamp() {
-        return timestamp;
-    }
+//    public LocalDateTime getTimestamp() {
+//        return timestamp;
+//    }
 
     public String getUserId() {
         return userId;

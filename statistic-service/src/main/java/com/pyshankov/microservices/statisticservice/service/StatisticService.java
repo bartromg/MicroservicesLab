@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
+import java.util.UUID;
 
 /**
  * Created by pyshankov on 4/30/18.
@@ -30,6 +31,7 @@ public class StatisticService {
         AmqpConsumer.recievedMessage(getProductEventFromJson(event), (message) -> {
             logger.info("Order Received: " + message);
             ProductEvent newProductEvent = getProductEventFromJson(event);
+            newProductEvent.setId(UUID.randomUUID());
             statisticRepository.save(newProductEvent);
         });
     }
