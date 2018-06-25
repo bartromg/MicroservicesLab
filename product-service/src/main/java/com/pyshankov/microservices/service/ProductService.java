@@ -25,7 +25,7 @@ public class ProductService {
 
     public void persist(Product product, String token) {
         User user = hazelcastClientTemplate.getUserFromCacheByToken(token);
-        product.setOwner(user);
+        product.setOwner(user.getEmail());
         productRepository.save(product);
         amqpProducerService.produceMsg(new ProductEvent(product.getId(),null, ProductEventType.CREATE_PRODUCT));
     }

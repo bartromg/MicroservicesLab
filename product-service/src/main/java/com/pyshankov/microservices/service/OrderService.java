@@ -20,7 +20,7 @@ public class OrderService {
 
     public void persist(Order order, String token) {
         User user = hazelcastClientTemplate.getUserFromCacheByToken(token);
-        order.setUser(user);
+        order.setUser(user.getEmail());
         orderRepository.save(order);
     }
 
