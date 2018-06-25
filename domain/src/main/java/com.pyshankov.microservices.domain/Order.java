@@ -1,18 +1,21 @@
 package com.pyshankov.microservices.domain;
 
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
-/**
- * Created by pyshankov on 4/29/18.
- */
+
+@Document
 public class Order {
+    @Id
     private String id;
     private LocalDateTime createDate;
     private List<Product> products;
     private BigDecimal price;
-
+    private String user;
 
     public String getId() {
         return id;
@@ -44,5 +47,24 @@ public class Order {
 
     public void setPrice(BigDecimal price) {
         this.price = price;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+    }
+  
+    @Override
+    public String toString() {
+        return "Order{" +
+                "id='" + id + '\'' +
+                ", createDate=" + createDate +
+                ", products=" + products +
+                ", price=" + price +
+                ", user=" + user +
+                '}';
     }
 }
