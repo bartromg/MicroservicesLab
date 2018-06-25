@@ -1,16 +1,20 @@
-package com.pyshankov.microservices.domain;
+package com.pyshankov.microservices.statisticservice.domain;
 
-import org.springframework.data.cassandra.mapping.PrimaryKey;
-import org.springframework.data.cassandra.mapping.Table;
+
+import org.springframework.data.cassandra.core.mapping.PrimaryKey;
+import org.springframework.data.cassandra.core.mapping.Table;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Table("ProductEvent")
-public class ProductEvent extends Event {
+public class ProductEvent {
 
     private static final long serialVersionUID = -4223434L;
 
+
     @PrimaryKey
+    private UUID id;
     private String productId;
     private ProductEventType productEventType;
     private LocalDateTime timestamp;
@@ -19,7 +23,8 @@ public class ProductEvent extends Event {
     public ProductEvent() {
     }
 
-    public ProductEvent(String productId, String userId, ProductEventType productEventType) {
+    public ProductEvent(UUID id, String productId, String userId, ProductEventType productEventType) {
+        this.id = id;
         this.productId = productId;
         this.productEventType = productEventType;
         this.userId = userId;
