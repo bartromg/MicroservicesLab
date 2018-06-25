@@ -28,7 +28,7 @@
         <dependency>
             <groupId>com.pyshankov.microservices</groupId>
             <artifactId>domain</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.cloud</groupId>
@@ -37,8 +37,8 @@
 
         <dependency>
             <groupId>com.pyshankov.microservices</groupId>
-            <artifactId>hazelcast-cash-client</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <artifactId>hazelcast-cache-client</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>javax.xml.bind</groupId>

@@ -1,16 +1,5 @@
 version: "3"
 services:
-    rabbitmq:
-        image: rabbitmq:3-management
-        restart: on-failure
-        ports:
-            - "15672:15672"
-            - "5672:5672"
-        logging:
-            options:
-                max-size: "10m"
-                max-file: "10"
-
     config:
         image: alkonoriev/distributed-lab-config
         restart: on-failure
@@ -29,3 +18,60 @@ services:
         image: alkonoriev/distributed-lab-product-service
         restart: on-failure
         network_mode: "host"
+
+    user-service:
+        image: alkonoriev/distributed-lab-user-service
+        restart: on-failure
+        network_mode: "host"
+
+    statistic-service:
+        image: alkonoriev/distibuted-lab-statistic-service
+        restart: on-failure
+        network_mode: "host"
+
+    hazelcast-cache:
+        image: alkonoriev/distributed-lab-hazelcast-cache
+        restart: on-failure
+        network_mode: "host"
+        ports:
+            - "5701:5701"
+
+    hazelcast-cache-client:
+        image: alkonoriev/distributed-lab-hazelcast-cache-client
+        restart: on-failure
+        network_mode: "host"
+        ports:
+            - "5701:5701"
+
+    api-gateway:
+        image: alkonoriev/distributed-lab-api-gateway
+        restart: on-failure
+        network_mode: "host"
+        ports:
+            - "8080:8080"
+
+    user-mongodb:
+        environment: 
+            MONGODB_DATABASE: "microservicedatabase"
+        image: mongo:latest
+        restart: on-failure
+        volumes:
+            - ./data/db:/data/db
+        ports:
+            - "27017:27017"
+        logging:
+            options:
+                max-size: "10m"
+                max-file: "10"
+
+    statistic-cassandra:
+        image: casandra:3.10
+        restart: on-failure
+        volumes:
+            - ./cassandradb/dbvol:/var/lib/cassandradb
+        ports:
+            - "9160:9160"
+        logging:
+            options:
+                max-size: "10m"
+                max-file: "10"

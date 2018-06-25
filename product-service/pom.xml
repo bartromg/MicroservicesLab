@@ -4,13 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.pyshankov.microservices</groupId>
-    <artifactId>bank-service</artifactId>
+    <artifactId>product-service</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>bank-service</name>
-    <description>Demo project for Spring Boot</description>
-
+    <name>product-service</name>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -39,7 +37,7 @@
 
         <dependency>
             <groupId>com.pyshankov.microservices</groupId>
-            <artifactId>hazelcast-cash-client</artifactId>
+            <artifactId>hazelcast-cache-client</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
 

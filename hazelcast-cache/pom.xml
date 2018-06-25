@@ -10,7 +10,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.pyshankov.microservices</groupId>
-    <artifactId>hazelcast-cash</artifactId>
+    <artifactId>hazelcast-cache</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
 
     <properties>
         <hazelcast.version>3.9.3</hazelcast.version>
