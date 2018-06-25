@@ -1,37 +1,26 @@
 package com.pyshankov.microservices.domain;
 
-import org.springframework.data.cassandra.mapping.PrimaryKey;
-import org.springframework.data.cassandra.mapping.Table;
-
+import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 /**
- * Created by valeriyartemenko on 06.05.18.
+ * Created by pyshankov on 4/29/18.
  */
-@Table("event")
-public class Event {
+public abstract class Event implements Serializable {
 
-    @PrimaryKey
-    private UUID id;
-    private String userId;
-    private LocalDateTime timestamp;
+    private static final long serialVersionUID = -4243434L;
 
-    public Event(){
+
+    protected String eventId;
+    protected String userId;
+    protected LocalDateTime timestamp;
+
+    public String getEventId() {
+        return eventId;
     }
 
-    public Event(UUID id, String userId, LocalDateTime age) {
-        this.id = id;
-        this.userId = userId;
-        this.timestamp = age;
-    }
-
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
+    public void setEventId(String eventId) {
+        this.eventId = eventId;
     }
 
     public String getUserId() {
@@ -42,12 +31,11 @@ public class Event {
         this.userId = userId;
     }
 
-    public LocalDateTime getAge() {
+    public LocalDateTime getTimestamp() {
         return timestamp;
     }
 
-    public void setAge(LocalDateTime timestamp) {
+    public void setTimestamp(LocalDateTime timestamp) {
         this.timestamp = timestamp;
     }
 }
-

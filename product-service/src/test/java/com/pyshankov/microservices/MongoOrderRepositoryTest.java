@@ -52,7 +52,7 @@ public class MongoOrderRepositoryTest {
     @Ignore
     public void testFetchData(){
         /*Test data retrieval*/
-        List<Order> orders = mongoRepository.findByUser(user);
+        List<Order> orders = mongoRepository.findByUser(user.getEmail());
         assertNotNull(orders);
         assertEquals(user, orders.get(0).getUser());
         /*Get all products, list should only have two*/
@@ -68,10 +68,10 @@ public class MongoOrderRepositoryTest {
     @Ignore
     public void testDataUpdate(){
         /*Test update*/
-        Order wearA = mongoRepository.findByUser(user).get(0);
+        Order wearA = mongoRepository.findByUser(user.getEmail()).get(0);
         wearA.setPrice(BigDecimal.valueOf(3*DEFAULT_COAST));
         mongoRepository.save(wearA);
-        Order wearB= mongoRepository.findByUser(user).get(0);
+        Order wearB= mongoRepository.findByUser(user.getEmail()).get(0);
         assertNotNull(wearB);
         assertEquals(BigDecimal.valueOf(3*DEFAULT_COAST), wearB.getPrice());
     }

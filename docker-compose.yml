@@ -1,102 +1,172 @@
 version: "3"
 services:
     config:
-        image: alkonoriev/distributed-lab-config
+        build: config
         restart: on-failure
-        ports:
-            - "8888:8888"
-        network_mode: "host"
+        expose:
+            - "8888"
+#        ports:
+#            - "8888:8888"
 
     registry:
-        image: alkonoriev/distributed-lab-registry:latest
+        build: registry
         restart: on-failure
-        ports:
-            - "8761:8761"
-        network_mode: "host"
         depends_on:
             - config
+        hostname: registry
+        expose:
+            - "8761"
+#        ports:
+#            - "8761:8761"
+
+
+    rabbitmq:
+#        image: rabbitmq:management
+        image: bitnami/rabbitmq:latest
+        expose:
+            - "15672"
+            - "5672"
+        environment:
+          - RABBITMQ_PASSWORD=password
+          - RABBITMQ_USERNAME=username
+#        volumes:
+#          - 'rabbitmqstats_data:/bitnami'
+        ports:
+          - "5672:5672"
+          - "15672:15672"
+
+
 
     hazelcast-cache:
-        image: alkonoriev/distributed-lab-hazelcast-cache
+        image: hazelcast/hazelcast
         restart: on-failure
-        network_mode: "host"
-        ports:
-            - "5701:5701"
         depends_on:
             - config
             - registry
+        expose:
+            - "5701"
+#        ports:
+#            - "5701:5701"
     
     api-gateway:
-        image: alkonoriev/distributed-lab-api-gateway
+        build: api-gateway
         restart: on-failure
-        network_mode: "host"
         ports:
             - "8080:8080"
+        links:
+           - registry
         depends_on:
             - config
             - registry
             - hazelcast-cache
+        volumes:
+                - ../resources:/configFolder
+        environment:
+                - JAVA_OPTS=-Dhazelcast.client.config=/configFolder/hazelcast-client.xml
     
     product-service:
-        image: alkonoriev/distributed-lab-product-service
+        build: product-service
         restart: on-failure
-        network_mode: "host"
         depends_on:
             - config
             - registry
             - hazelcast-cache
             - api-gateway
-        healthcheck:
-            test: ["CMD", "curl", "-f", "http://localhost:8888"]
-    
+#        healthcheck:
+#            test: ["CMD", "curl", "-f", "http://localhost:8888"]
+        expose:
+            - "10001"
+#        ports:
+#            - "10001:10001"
+
     user-mongodb:
-        environment: 
+        environment:
             MONGODB_DATABASE: "microservicedatabase"
         image: mongo:latest
         restart: on-failure
         volumes:
             - ./data/db:/data/db
-        ports:
-            - "27017:27017"
         logging:
             options:
                 max-size: "10m"
                 max-file: "10"
-    
+
+#-----------------------mongo db replica set: start--------------------------
+    mongo-primary:
+        image: mongo:3.4
+        volumes:
+          - ./p:/data
+        expose:
+          - "27017"
+        ports:
+          - "27017:27017"
+        command: mongod --smallfiles --replSet microservice-replica
+
+    mongo-secondary1:
+        image: mongo:3.4
+        volumes:
+          - ./s1:/data
+        expose:
+          - "27017"
+        ports:
+          - "27018:27017"
+        command: mongod --smallfiles --replSet microservice-replica
+
+
+    mongo-secondary2:
+        image: mongo:3.4
+        volumes:
+          - ./s2:/data
+        expose:
+          - "27017"
+        ports:
+          - "27019:27017"
+        command: mongod --smallfiles --replSet microservice-replica
+
+    replica-set-configurer:
+        build: replica-set-configurer
+
+#-----------------------mongo db replica set: end--------------------------
+
+
     user-service:
-        image: alkonoriev/distributed-lab-user-service
+        build: user-service
         restart: on-failure
-        network_mode: "host"
-        healthcheck:
-            test: ["CMD", "curl", "-f", "http://localhost:8888"]
+#        healthcheck:
+#            test: ["CMD", "curl", "-f", "http://localhost:8888"]
         depends_on:
             - config
             - registry
             - hazelcast-cache
             - api-gateway
             - user-mongodb
+        links:
+            - registry
+        expose:
+            - "9001"
+#        ports:
+#            - "9001:9001"
     
     statistic-service:
-        image: alkonoriev/distibuted-lab-statistic-service
+        build: statistic-service
         restart: on-failure
-        network_mode: "host"
-        healthcheck:
-            test: ["CMD", "curl", "-f", "http://localhost:8888"]
+#        healthcheck:
+#            test: ["CMD", "curl", "-f", "http://localhost:8888"]
         depends_on:
             - config
             - registry
             - hazelcast-cache
             - api-gateway
             - user-mongodb
-    
-    statistic-cassandra:
-        image: casandra:3.10
-        restart: on-failure
-        volumes:
-            - ./cassandradb/dbvol:/var/lib/cassandradb
-        ports:
-            - "9160:9160"
-        logging:
-            options:
-                max-size: "10m"
-                max-file: "10"
+
+#    statistic-cassandra:
+#        image: casandra:3.10
+#        restart: on-failure
+#        volumes:
+#            - ./cassandradb/dbvol:/var/lib/cassandradb
+#        expose:
+#            - "9160"
+#        logging:
+#            options:
+#                max-size: "10m"
+#                max-file: "10"

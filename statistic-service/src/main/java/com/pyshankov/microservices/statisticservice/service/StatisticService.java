@@ -1,41 +1,41 @@
 package com.pyshankov.microservices.statisticservice.service;
 
-import com.pyshankov.microservices.domain.Event;
-import com.pyshankov.microservices.statisticservice.repository.StatisticRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pyshankov.microservices.domain.ProductEvent;
+import com.pyshankov.microservices.statisticservice.config.RabbitConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
-import java.util.List;
+import java.io.IOException;
 
 /**
  * Created by pyshankov on 4/30/18.
  */
-@Service
+@Component
 public class StatisticService {
 
-//    public void handleEvent(Event event) {
-//        AmqpConsumer.recievedMessage(event, (message) -> {
-//
-//            // TODO: store there event variable to cassandra db, @valera
-//        });
-//    }
+    static final Logger logger = LoggerFactory.getLogger(StatisticService.class);
 
     @Autowired
-    StatisticRepository statisticRepository;
+    private ObjectMapper objectMapper;
 
-    public StatisticService() {
+    @RabbitListener(queues = RabbitConfig.QUEUE_ORDERS)
+    public void handleEvent(String event) {
+        AmqpConsumer.recievedMessage(getProductEventFromJson(event), (message) -> {
+            logger.info("Order Received: " + message);
+        });
     }
 
-    public void handleEvent(Event event) {
-//        Event event = new Event(UUID.randomUUID(), "77777", LocalDateTime.now());
-        statisticRepository.save(event);
-    }
-
-    public List<Event> getEventsByName(String firstname) {
-        return statisticRepository.findByFirstname(firstname);
-    }
-
-    public void clearData() {
-        statisticRepository.deleteAll();
+    ProductEvent getProductEventFromJson(String productEventJson) {
+        try {
+            return objectMapper.readValue(productEventJson, ProductEvent.class);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }
+

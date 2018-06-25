@@ -12,5 +12,5 @@ import java.util.List;
  */
 @Repository
 public interface OrderRepository extends MongoRepository<Order, String> {
-    List<Order> findByUser(User user);
+    List<Order> findByUser(String email);
 }

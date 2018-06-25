@@ -14,6 +14,9 @@ public class Product {
     private BigDecimal price;
     private String ownerEmail;
 
+    public Product() {
+    }
+
     public Product(String name, String description, BigDecimal price) {
         this.name = name;
         this.description = description;

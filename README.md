@@ -1,2 +1,2 @@
 # Microservices
-Travis: https://travis-ci.org/Distributed-labs-team/Microservices/branches
+[![Build Status](https://travis-ci.org/Distributed-labs-team/Microservices.svg?branch=master)](https://travis-ci.org/Distributed-labs-team/Microservices)

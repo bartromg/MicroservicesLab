@@ -33,7 +33,7 @@ public class OrderService {
     }
 
     public List<Order> getOrders(User user) {
-        return orderRepository.findByUser(user);
+        return orderRepository.findByUser(user.getEmail());
     }
 
     public List<Order> getAllOrders() {

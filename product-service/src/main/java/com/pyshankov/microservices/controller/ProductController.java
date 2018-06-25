@@ -1,14 +1,18 @@
 package com.pyshankov.microservices.controller;
 
 import com.pyshankov.microservices.domain.Product;
-import com.pyshankov.microservices.domain.User;
-import com.pyshankov.microservices.hazelcast.cache.HazelcastClientTemplate;
 import com.pyshankov.microservices.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -25,21 +29,21 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
-    @GetMapping(value = "/product/{id}")
+    @GetMapping(value = "/products/{id}")
     public Product getProduct(@PathVariable String id) {
         return productService.getProduct(id);
     }
 
-    @DeleteMapping(value = "/product/{id}")
+    @DeleteMapping(value = "/products/{id}")
     public void deleteProduct(@PathVariable String id) {
         productService.deleteProduct(id);
     }
 
-    @PostMapping(value = "/product/{id}")
-    public ResponseEntity<String> createProduct(@RequestBody Product product, @RequestHeader HttpHeaders headers) {
+    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping(value = "/products")
+    public Product createProduct(@RequestBody Product product, @RequestHeader HttpHeaders headers) {
         // TODO check if product is valid
-        productService.persist(product, headers.getFirst(HEADER_STRING));
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        return productService.persist(product, headers.getFirst(HEADER_STRING));
     }
 
 }

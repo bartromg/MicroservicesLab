@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Import;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
@@ -37,6 +38,7 @@ public class ProductServiceApplication {
     @Autowired
     private DiscoveryClient discoveryClient;
 
+
     @Bean
     public RestTemplate getRestTemplate() {
         return new RestTemplate();
@@ -46,7 +48,7 @@ public class ProductServiceApplication {
         SpringApplication.run(ProductServiceApplication.class, args);
     }
 
-    @RequestMapping(value = "/test")
+    @RequestMapping(method = RequestMethod.GET, value = "/test")
     public String getTest() {
         return "test from Product";
     }
