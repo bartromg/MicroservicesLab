@@ -13,6 +13,8 @@ services:
         ports:
             - "8761:8761"
         network_mode: "host"
+        depends_on:
+            - config
 
     hazelcast-cache:
         image: alkonoriev/distributed-lab-hazelcast-cache
@@ -20,13 +22,9 @@ services:
         network_mode: "host"
         ports:
             - "5701:5701"
-
-    product-service:
-        image: alkonoriev/distributed-lab-product-service
-        restart: on-failure
-        network_mode: "host"
-        healthcheck:
-            test: ["CMD", "curl", "-f", "http://localhost:8888"]
+        depends_on:
+            - config
+            - registry
     
     api-gateway:
         image: alkonoriev/distributed-lab-api-gateway
@@ -34,7 +32,23 @@ services:
         network_mode: "host"
         ports:
             - "8080:8080"
-
+        depends_on:
+            - config
+            - registry
+            - hazelcast-cache
+    
+    product-service:
+        image: alkonoriev/distributed-lab-product-service
+        restart: on-failure
+        network_mode: "host"
+        depends_on:
+            - config
+            - registry
+            - hazelcast-cache
+            - api-gateway
+        healthcheck:
+            test: ["CMD", "curl", "-f", "http://localhost:8888"]
+    
     user-mongodb:
         environment: 
             MONGODB_DATABASE: "microservicedatabase"
@@ -55,14 +69,26 @@ services:
         network_mode: "host"
         healthcheck:
             test: ["CMD", "curl", "-f", "http://localhost:8888"]
-
+        depends_on:
+            - config
+            - registry
+            - hazelcast-cache
+            - api-gateway
+            - user-mongodb
+    
     statistic-service:
         image: alkonoriev/distibuted-lab-statistic-service
         restart: on-failure
         network_mode: "host"
         healthcheck:
             test: ["CMD", "curl", "-f", "http://localhost:8888"]
-
+        depends_on:
+            - config
+            - registry
+            - hazelcast-cache
+            - api-gateway
+            - user-mongodb
+    
     statistic-cassandra:
         image: casandra:3.10
         restart: on-failure

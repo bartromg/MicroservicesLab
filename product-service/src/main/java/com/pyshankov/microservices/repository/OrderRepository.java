@@ -11,6 +11,6 @@ import java.util.List;
  * Created by Alexey on 30/4/17.
  */
 @Repository
-public interface OrderRepository extends MongoRepository<Order,Long> {
+public interface OrderRepository extends MongoRepository<Order, String> {
     List<Order> findByUser(User user);
 }

@@ -1,30 +1,33 @@
 package com.pyshankov.microservices.domain;
 
-/**
- * Created by pyshankov on 4/29/18.
- */
-public class ProductEvent extends Event {
-    private Long productId;
-    private ProductEventType productEventType;
+import java.time.LocalDateTime;
 
-    public ProductEvent(Long productId, ProductEventType productEventType) {
+public class ProductEvent extends Event {
+    private String productId;
+    private ProductEventType productEventType;
+    private LocalDateTime timestamp;
+    private String userId;
+
+    public ProductEvent(String productId, String userId, ProductEventType productEventType) {
         this.productId = productId;
         this.productEventType = productEventType;
+        this.userId = userId;
+        timestamp = LocalDateTime.now();
     }
 
-    public Long getProductId() {
+    public String getProductId() {
         return productId;
-    }
-
-    public void setProductId(Long productId) {
-        this.productId = productId;
     }
 
     public ProductEventType getProductEventType() {
         return productEventType;
     }
 
-    public void setProductEventType(ProductEventType productEventType) {
-        this.productEventType = productEventType;
+    public LocalDateTime getTimestamp() {
+        return timestamp;
+    }
+
+    public String getUserId() {
+        return userId;
     }
 }

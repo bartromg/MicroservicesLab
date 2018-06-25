@@ -1,5 +1,6 @@
 package com.pyshankov.microservices.statisticservice;
 
+import com.pyshankov.microservices.domain.User;
 import com.pyshankov.microservices.hazelcast.cache.HazelcastClientConfig;
 import com.pyshankov.microservices.statisticservice.repository.UserRepository;
 import javafx.util.Pair;
