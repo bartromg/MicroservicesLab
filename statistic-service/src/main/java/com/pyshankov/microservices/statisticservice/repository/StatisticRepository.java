@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by valeriyartemenko on 06.05.18.
  */
-public interface EventRepository  extends CrudRepository<Event, String> {
+public interface StatisticRepository extends CrudRepository<Event, String> {
 
     @Query(value="SELECT * FROM event WHERE firstname=?0")
     public List<Event> findByFirstname(String firstname);
