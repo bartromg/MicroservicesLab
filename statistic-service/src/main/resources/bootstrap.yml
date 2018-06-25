@@ -2,7 +2,7 @@ spring:
   application:
     name: statistic-service
   cloud:
-    cloud:
+    config:
       uri: http://config:8888
       fail-fast: true
 
