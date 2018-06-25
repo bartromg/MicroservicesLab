@@ -27,8 +27,8 @@ services:
             - "15672"
             - "5672"
         environment:
-          - RABBITMQ_PASSWORD=password
-          - RABBITMQ_USERNAME=username
+          - RABBITMQ_PASSWORD=superSecure
+          - RABBITMQ_USERNAME=fasdkng30efdbho20
 #        volumes:
 #          - 'rabbitmqstats_data:/bitnami'
         ports:
