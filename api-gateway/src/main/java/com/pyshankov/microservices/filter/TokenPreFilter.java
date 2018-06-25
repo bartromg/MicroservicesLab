@@ -40,7 +40,7 @@ public class TokenPreFilter extends ZuulFilter {
 
     @Override
     public boolean shouldFilter() {
-        return true;
+        return !"OPTIONS".equals(RequestContext.getCurrentContext().getRequest().getMethod());
     }
 
     @Override
@@ -48,7 +48,6 @@ public class TokenPreFilter extends ZuulFilter {
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
         HttpServletResponse response = ctx.getResponse();
-
 
         String header = request.getHeader(HEADER_STRING);
         if (header == null) {

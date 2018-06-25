@@ -13,6 +13,7 @@ public class Product {
     private String description;
     private BigDecimal price;
     private String ownerEmail;
+    private Boolean bought;
 
     public Product() {
     }
@@ -21,6 +22,7 @@ public class Product {
         this.name = name;
         this.description = description;
         this.price = price;
+        this.bought = false;
     }
 
     public String getId() {
@@ -62,6 +64,14 @@ public class Product {
 
     public void setOwner(String owner) {
         this.ownerEmail = owner;
+    }
+
+    public Boolean getBought() {
+        return bought;
+    }
+
+    public void setBought(Boolean bought) {
+        this.bought = bought;
     }
 
     @Override
