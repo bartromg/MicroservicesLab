@@ -38,7 +38,6 @@ public class ProductServiceApplication {
     @Autowired
     private DiscoveryClient discoveryClient;
 
-
     @Bean
     public RestTemplate getRestTemplate() {
         return new RestTemplate();

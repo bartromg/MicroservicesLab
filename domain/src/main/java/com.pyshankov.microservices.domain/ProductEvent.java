@@ -3,16 +3,10 @@ package com.pyshankov.microservices.domain;
 import java.time.LocalDateTime;
 
 public class ProductEvent extends Event {
-
-    private static final long serialVersionUID = -4223434L;
-
     private String productId;
     private ProductEventType productEventType;
     private LocalDateTime timestamp;
     private String userId;
-
-    public ProductEvent() {
-    }
 
     public ProductEvent(String productId, String userId, ProductEventType productEventType) {
         this.productId = productId;

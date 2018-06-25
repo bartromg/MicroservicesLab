@@ -27,5 +27,4 @@ public class StatisticServiceApplication {
         return "test from Statistic";
     }
 
-
 }
