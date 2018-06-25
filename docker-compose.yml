@@ -5,6 +5,8 @@ services:
         restart: on-failure
         expose:
             - "8888"
+#        ports:
+#            - "8888:8888"
 
     registry:
         build: registry
@@ -19,6 +21,7 @@ services:
 
 
     rabbitmq:
+#        image: rabbitmq:management
         image: bitnami/rabbitmq:latest
         expose:
             - "15672"
@@ -69,8 +72,12 @@ services:
             - registry
             - hazelcast-cache
             - api-gateway
+#        healthcheck:
+#            test: ["CMD", "curl", "-f", "http://localhost:8888"]
         expose:
             - "10001"
+#        ports:
+#            - "10001:10001"
 
 
 #-----------------------mongo db replica set: start--------------------------
