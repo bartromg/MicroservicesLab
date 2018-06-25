@@ -5,8 +5,6 @@ services:
         restart: on-failure
         expose:
             - "8888"
-#        ports:
-#            - "8888:8888"
 
     registry:
         build: registry
@@ -21,7 +19,6 @@ services:
 
 
     rabbitmq:
-#        image: rabbitmq:management
         image: bitnami/rabbitmq:latest
         expose:
             - "15672"
