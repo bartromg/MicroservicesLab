@@ -7,19 +7,12 @@ spring:
       fail-fast: true
   data:
     mongodb:
-        port: 27017
-        host: user-mongodb
-        database: microservicedatabase
+        uri: mongodb://mongo-primary:27017,mongo-secondary1:27017,mongo-secondary2:27017/microservicedatabase?replicaSet=microservice-replica
+#        port: 27017
+#        host: user-mongodb
+#        database: microservicedatabase
 server:
   port: 9001
 
-#  rabbitmq:
-#        host: eagle.rmq.cloudamqp.com
-#        port: 5672
-#        username: ycrztttz
-#        password: -5uCCCBi58VWmdbOcPxGVr8-er7G4SFJ
-amqp:
-    rabbitmq:
-        exchange: amqp.direct
-        routingkey: amqp.routingkey
+
 

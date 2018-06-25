@@ -49,6 +49,7 @@ public class TokenPreFilter extends ZuulFilter {
         HttpServletRequest request = ctx.getRequest();
         HttpServletResponse response = ctx.getResponse();
 
+
         String header = request.getHeader(HEADER_STRING);
         if (header == null) {
             setFailedRequest("unauthorized", 401);
