@@ -7,3 +7,14 @@ spring:
       fail-fast: true
 server:
   port: 9001
+
+#  rabbitmq:
+#        host: eagle.rmq.cloudamqp.com
+#        port: 5672
+#        username: ycrztttz
+#        password: -5uCCCBi58VWmdbOcPxGVr8-er7G4SFJ
+amqp:
+    rabbitmq:
+        exchange: amqp.direct
+        routingkey: amqp.routingkey
+
